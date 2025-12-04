@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Button from "../../ui/Button";
+import Button from "../../../ui/Button";
 import { CheckCircle, XCircle, RefreshCw } from "lucide-react";
 
 const PrePublishCheckView = ({ colors }) => {

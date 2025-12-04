@@ -1,6 +1,6 @@
 import React from "react";
 import { CheckCircle, AlertCircle, X } from "lucide-react";
-import { colors } from "../colors";
+import { colors } from "../../colors";
 
 const Toast = ({ toast, close }) => {
   if (!toast) return null;

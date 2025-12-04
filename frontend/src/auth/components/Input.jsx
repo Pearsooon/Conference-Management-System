@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { colors } from "../colors";
+import { colors } from "../../colors";
 import { Eye, EyeOff } from "lucide-react";
 
 const Input = ({

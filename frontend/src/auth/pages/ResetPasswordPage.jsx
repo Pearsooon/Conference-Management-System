@@ -4,7 +4,7 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import Toast from "../components/Toast";
 import { Lock, ArrowRight } from "lucide-react";
-import { colors } from "../colors";
+import { colors } from "../../colors";
 
 const ResetPasswordPage = ({ onNavigate }) => {
   const [toast, setToast] = useState(null);

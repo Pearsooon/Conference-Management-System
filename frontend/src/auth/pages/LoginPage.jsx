@@ -4,6 +4,7 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import Toast from "../components/Toast";
 import { Mail, Lock, ArrowRight, Shield } from "lucide-react";
+import { colors } from "../../colors"; // Đã thêm import colors
 
 const LoginPage = ({ onNavigate }) => {
   const [toast, setToast] = useState(null);
@@ -114,7 +115,7 @@ const LoginPage = ({ onNavigate }) => {
               style={{
                 background: "none",
                 border: "none",
-                color: "#2563eb",
+                color: colors.primary, // Thay đổi: Dùng colors.primary
                 fontWeight: 500,
                 cursor: "pointer"
               }}
@@ -134,7 +135,9 @@ const LoginPage = ({ onNavigate }) => {
           style={{
             marginTop: "24px",
             padding: "16px",
-            background: "#f5f7fa",
+            // THAY ĐỔI STYLE ĐỂ CÂN ĐỐI HƠN:
+            background: colors.cardBg, // Giữ màu nền card để đồng bộ
+            border: `1px solid ${colors.border}`, // Thêm viền nhẹ
             borderRadius: "8px",
             textAlign: "center",
             fontSize: "14px"
@@ -152,7 +155,7 @@ const LoginPage = ({ onNavigate }) => {
               background: "none",
               border: "none",
               fontWeight: "600",
-              color: "#2563eb",
+              color: colors.primary, // Thay đổi: Dùng colors.primary
               cursor: "pointer"
             }}
           >

@@ -1,6 +1,6 @@
 import React from "react";
 import { Loader } from "lucide-react";
-import { colors } from "../colors";
+import { colors } from "../../colors";
 
 const Button = ({
   children,

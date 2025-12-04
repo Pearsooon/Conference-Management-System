@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom"; // Import Navigate
 
 import AuthRouter from "./auth/AuthRouter";
 import SecretariatLayout from "./layout/SecretariatLayout";
@@ -7,13 +7,16 @@ import SecretariatLayout from "./layout/SecretariatLayout";
 const App = () => {
   return (
     <Routes>
-      {/* Auth system */}
+      {/* Auth system (Landing page cho /auth/*) */}
       <Route path="/auth/*" element={<AuthRouter />} />
 
-      {/* Secretariat system */}
+      {/* Main App System (Landing page cho /app/*) */}
       <Route path="/app/*" element={<SecretariatLayout />} />
 
-      {/* fallback */}
+      {/* Redirect Root URL (/) to the Dashboard for testing */}
+      <Route path="/" element={<Navigate to="/app/oc/dashboard" replace />} />
+
+      {/* fallback (Sẽ chuyển hướng các URL không khớp về trang Auth) */}
       <Route path="*" element={<AuthRouter />} />
     </Routes>
   );

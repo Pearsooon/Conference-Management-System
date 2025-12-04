@@ -1,7 +1,7 @@
 // src/auth/components/PasswordStrengthBar.jsx
 
 import React from "react";
-import { colors } from "../colors";
+import { colors } from "../../colors";
 
 const strengthColors = [
   "#ef4444", // Very weak

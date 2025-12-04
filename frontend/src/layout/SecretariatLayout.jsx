@@ -1,75 +1,104 @@
 import React, { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+// Import TopBar, Sidebar, colors (đã fix)
+// ... import PAGES ...
 
-import Sidebar from "./Sidebar";
-import TopBar from "./TopBar";
+// --- Dữ liệu MOCK Tạm thời (Chuyển sang context/hooks sau) ---
+// ... mockColors và mockData ...
 
-// import secretary pages
-import PapersListView from "../pages/Papers/PapersListView";
-import SessionBuilderView from "../pages/Sessions/SessionBuilderView";
-import ReviewDecisionsView from "../pages/ReviewDecisions/ReviewDecisionsView";
-import FinalSubmissionView from "../pages/FinalSubmission/FinalSubmissionView";
-import BestPaperEvalView from "../pages/BestPaper/BestPaperEvalView";
-import PrePublishCheckView from "../pages/PrePublish/PrePublishCheckView";
-import AiProofreadView from "../pages/AiProofreading/AiProofreadView";
-
-import { 
-  FileText, Calendar, CheckCircle, Upload, 
-  AlertCircle, Edit, Clock 
-} from "lucide-react";
-
-const colors = {
-  primary: "#2563eb",
-  primaryHover: "#1d4ed8",
-  secondary: "#64748b",
-  success: "#10b981",
-  warning: "#f59e0b",
-  danger: "#ef4444",
-  bg: "#f8fafc",
-  cardBg: "#ffffff",
-  border: "#e2e8f0",
-  text: "#1e293b",
-  textLight: "#64748b"
+const MODULE_ROUTES = {
+    // Sửa ID để khớp với URL và logic trong Sidebar
+    oc: {
+        title: 'Organizing Committee',
+        items: [
+            { id: 'oc/dashboard', label: 'Financial Dashboard', icon: 'DollarSign' },
+            { id: 'oc/budget-approval', label: 'Budget Approvals', icon: 'AlertTriangle' },
+            { id: 'oc/setup', label: 'Conference Setup', icon: 'Settings' },
+            { id: 'oc/email-management', label: 'Email Management', icon: 'Mail' },
+            { id: 'oc/awards', label: 'Awards & Results', icon: 'Award' }
+        ]
+    },
+    registration: {
+        title: 'Registration & CMS',
+        items: [
+            { id: 'reg/list', label: 'Registration List', icon: 'Users' },
+            { id: 'reg/settings', label: 'Registration Settings', icon: 'Sliders' },
+            { id: 'reg/cms', label: 'Content Management', icon: 'Globe' },
+            { id: 'reg/post-comm', label: 'Post-Event Comm', icon: 'Send' }
+        ]
+    },
+    logistics: {
+        title: 'Logistics & On-site',
+        items: [
+            { id: 'logistics/staff', label: 'Staff Assignment', icon: 'Calendar' },
+            { id: 'logistics/checkin', label: 'QR Check-in', icon: 'QrCode' },
+            { id: 'logistics/venue', label: 'Venue & Travel', icon: 'MapPin' }
+        ]
+    },
+    submission: {
+        title: 'Academic Submission',
+        items: [
+            { id: 'sub/review-decisions', label: 'Review Decisions', icon: 'Eye' },
+            { id: 'sub/papers-list', label: 'Papers List', icon: 'FileText' },
+            { id: 'sub/final-submission', label: 'Final Submissions', icon: 'Upload' },
+            { id: 'sub/proofread', label: 'AI Proofreading', icon: 'Brain' },
+            { id: 'sub/pre-publish', label: 'Pre-Publish Check', icon: 'CheckCircle' },
+            { id: 'sub/best-paper', label: 'Best Paper Eval', icon: 'Star' },
+            { id: 'sub/ai-session', label: 'AI Session Builder', icon: 'Zap' },
+        ]
+    }
 };
 
 const SecretariatLayout = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+    const [sidebarOpen, setSidebarOpen] = useState(true);
+    const location = useLocation();
 
-  const navItems = [
-    { id: "papers", label: "Accepted Papers", icon: FileText, path: "papers" },
-    { id: "sessions", label: "AI Session Builder", icon: Calendar, path: "sessions" },
-    { id: "reviews", label: "Review Decisions", icon: CheckCircle, path: "reviews" },
-    { id: "final", label: "Final Submissions", icon: Upload, path: "final" },
-    { id: "best", label: "Best Paper Eval", icon: AlertCircle, path: "best" },
-    { id: "proof", label: "AI Proofreading", icon: Edit, path: "proof" },
-    { id: "prepublish", label: "Pre-Publish Check", icon: Clock, path: "prepublish" },
-  ];
+    // 1. Xác định Module Key hiện tại dựa trên URL
+    // URL format: /app/moduleKey/path
+    const pathSegments = location.pathname.split('/').filter(Boolean);
+    const moduleKey = pathSegments[1] || 'oc'; // Mặc định là 'oc'
 
-  return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
-      
-      <TopBar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} colors={colors} />
+    // 2. Lấy danh sách Nav Items cho module hiện tại
+    const currentModuleData = MODULE_ROUTES[moduleKey] || MODULE_ROUTES.oc;
 
-      <div style={{ display: "flex", height: "100%" }}>
-        <Sidebar navItems={navItems} colors={colors} sidebarOpen={sidebarOpen} />
+    // 3. Chuẩn bị NavItems để truyền xuống Sidebar
+    const navItems = currentModuleData.items.map(item => ({
+        ...item,
+        path: `/app/${item.id}` // Tạo đường dẫn tuyệt đối
+    }));
+    
+    // Fallback: Nếu không tìm thấy module, dùng mảng rỗng để tránh lỗi .map()
+    const finalNavItems = currentModuleData ? navItems : []; 
 
-        <main style={{ flex: 1, padding: "24px", overflowY: "auto" }}>
-          <Routes>
-            <Route path="papers" element={<PapersListView colors={colors} />} />
-            <Route path="sessions" element={<SessionBuilderView colors={colors} />} />
-            <Route path="reviews" element={<ReviewDecisionsView colors={colors} />} />
-            <Route path="final" element={<FinalSubmissionView colors={colors} />} />
-            <Route path="best" element={<BestPaperEvalView colors={colors} />} />
-            <Route path="proof" element={<AiProofreadView colors={colors} />} />
-            <Route path="prepublish" element={<PrePublishCheckView colors={colors} />} />
-
-            {/* Default page */}
-            <Route path="*" element={<PapersListView colors={colors} />} />
-          </Routes>
-        </main>
-      </div>
-    </div>
-  );
+    return (
+        <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: mockColors.bg }}>
+            <TopBar 
+                colors={mockColors} 
+                sidebarOpen={sidebarOpen}
+                setSidebarOpen={setSidebarOpen}
+            />
+            
+            <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
+                <Sidebar 
+                    colors={mockColors} 
+                    sidebarOpen={sidebarOpen}
+                    navItems={finalNavItems} // TRUYỀN DANH SÁCH ITEMS ĐÃ ĐƯỢC XỬ LÝ
+                    moduleTitle={currentModuleData.title} // Tên Module để hiển thị
+                />
+                
+                <main style={{ flex: 1, padding: '24px 32px', overflowY: 'auto' }}>
+                    <Routes>
+                        {/* --- OC Routes --- */}
+                        <Route path="oc/dashboard" element={<FinancialDashboard colors={mockColors} data={mockData} />} />
+                        {/* ... Các Routes khác ... */}
+                        
+                        {/* Fallback cho /app/ (Redirect đến trang mặc định) */}
+                        <Route path="/" element={<Navigate to="oc/dashboard" replace />} />
+                    </Routes>
+                </main>
+            </div>
+        </div>
+    );
 };
 
 export default SecretariatLayout;

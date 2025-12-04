@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Button from "../../ui/Button";
+import Button from "../../../ui/Button";
 import { Upload, Send, FileText } from "lucide-react";
-import Modal from "../../ui/Modal";
+import Modal from "../../../ui/Modal";
 
 const AiProofreadView = ({ colors }) => {
   const [file, setFile] = useState(null);

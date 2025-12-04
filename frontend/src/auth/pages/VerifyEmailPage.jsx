@@ -3,7 +3,7 @@ import AuthLayout from "../components/AuthLayout";
 import Button from "../components/Button";
 import Toast from "../components/Toast";
 import { Mail, ArrowRight, RefreshCw } from "lucide-react";
-import { colors } from "../colors";
+import { colors } from "../../colors";
 
 const VerifyEmailPage = ({ onNavigate }) => {
   const [toast, setToast] = useState(null);

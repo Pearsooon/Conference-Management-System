@@ -4,7 +4,7 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 import Toast from "../components/Toast";
 import { Mail, CheckCircle } from "lucide-react";
-import { colors } from "../colors";
+import { colors } from "../../colors";
 
 const ForgotPasswordPage = ({ onNavigate }) => {
   const [form, setForm] = useState({ email: "" });

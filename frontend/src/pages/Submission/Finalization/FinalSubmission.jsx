@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Button from "../../ui/Button";
-import Modal from "../../ui/Modal";
+import Button from "../../../ui/Button";
+import Modal from "../../../ui/Modal";
 import { Upload, Eye, CheckCircle, XCircle } from "lucide-react";
 
 const FinalSubmissionView = ({ colors }) => {

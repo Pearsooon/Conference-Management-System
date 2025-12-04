@@ -10,3 +10,5 @@ export const colors = {
   text: "#1e293b",
   textLight: "#64748b",
 };
+
+export default colors;

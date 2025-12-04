@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Eye, Download, Filter, RefreshCw, Save, Edit, X } from "lucide-react";
-import Button from "../../ui/Button";
-import Modal from "../../ui/Modal";
+import Button from "../../../ui/Button";
+import Modal from "../../../ui/Modal";
 
 const PapersListView = ({ colors }) => {
   const [showDetailPanel, setShowDetailPanel] = useState(false);
