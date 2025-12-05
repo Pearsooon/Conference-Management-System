@@ -1,0 +1,43 @@
+tags:
+  - name: Best Paper Evaluation
+    description: AI-Based Best Paper Selection
+
+paths:
+  /papers/best-candidates/{confId}:
+    get:
+      tags: [Best Paper Evaluation]
+      summary: Get top papers by review score + AI depth score
+      parameters:
+        - name: confId
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: Candidate list
+
+  /papers/{paperId}/run-ai-depth:
+    post:
+      tags: [Best Paper Evaluation]
+      summary: Run AI depth score analysis for a paper
+      parameters:
+        - name: paperId
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: AI depth computed
+
+  /papers/{paperId}/finalize-award:
+    put:
+      tags: [Best Paper Evaluation]
+      summary: Finalize Best Paper award for a paper
+      parameters:
+        - name: paperId
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: Paper awarded

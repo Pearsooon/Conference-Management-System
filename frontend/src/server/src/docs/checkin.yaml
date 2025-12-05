@@ -1,0 +1,42 @@
+tags:
+  - name: Check-in
+    description: QR-based attendee check-in system
+
+paths:
+
+  /checkin/validate/{token}:
+    get:
+      tags: [Check-in]
+      summary: Validate a QR check-in token
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200": { description: Valid token }
+        "404": { description: Invalid token }
+
+  /checkin/confirm:
+    post:
+      tags: [Check-in]
+      summary: Confirm attendee check-in
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                registrationId: { type: integer }
+      responses:
+        "200": { description: Check-in successful }
+
+  /checkin/list/{confId}:
+    get:
+      tags: [Check-in]
+      summary: List all attendee check-ins for a conference
+      parameters:
+        - name: confId
+          in: path
+          schema: { type: integer }
+      responses:
+        "200": { description: Check-in list }

@@ -1,0 +1,49 @@
+openapi: 3.0.0
+info:
+  title: Final Submission Module
+  version: 1.0.0
+
+tags:
+  - name: Final Submission
+    description: Upload và xác nhận bản cuối cùng của bài báo
+
+paths:
+  /api/v1/papers/{paperId}/upload:
+    post:
+      tags:
+        - Final Submission
+      summary: Upload bản sửa bài báo
+      parameters:
+        - name: paperId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        200:
+          description: Upload thành công
+
+  /api/v1/papers/versions/{versionId}/confirm:
+    put:
+      tags:
+        - Final Submission
+      summary: Xác nhận bản cuối cùng
+      parameters:
+        - name: versionId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Đã chốt bản cuối

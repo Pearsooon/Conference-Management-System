@@ -1,0 +1,56 @@
+tags:
+  - name: Ticket Configs
+    description: Create & manage conference ticket types
+
+paths:
+  /tickets/create:
+    post:
+      tags: [Ticket Configs]
+      summary: Create a new ticket type
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ticketName: { type: string }
+                price: { type: number }
+                quantityLimit: { type: integer }
+                openTime: { type: string, format: date-time }
+                closeTime: { type: string, format: date-time }
+      responses:
+        "201":
+          description: Ticket created
+
+  /tickets/{ticketId}/status:
+    put:
+      tags: [Ticket Configs]
+      summary: Enable/disable a ticket type
+      parameters:
+        - name: ticketId
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                isActive: { type: boolean }
+      responses:
+        "200":
+          description: Status updated
+
+  /tickets/{confId}/list:
+    get:
+      tags: [Ticket Configs]
+      summary: List ticket configs by conference
+      parameters:
+        - in: path
+          name: confId
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: Ticket list

@@ -1,0 +1,72 @@
+tags:
+  - name: Registration
+    description: Manage attendee registrations
+
+paths:
+
+  /registrations:
+    post:
+      tags: [Registration]
+      summary: User registers to a conference
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                userId: { type: integer }
+                conferenceId: { type: integer }
+                ticketId: { type: integer }
+      responses:
+        "201":
+          description: Registration created
+
+  /registrations/{regId}/approve:
+    put:
+      tags: [Registration]
+      parameters:
+        - in: path
+          name: regId
+          schema: { type: integer }
+          required: true
+      summary: Approve a registration
+      responses:
+        "200":
+          description: Approved
+
+  /registrations/{regId}/reject:
+    put:
+      tags: [Registration]
+      parameters:
+        - in: path
+          name: regId
+          schema: { type: integer }
+          required: true
+      summary: Reject a registration
+      responses:
+        "200":
+          description: Rejected
+
+  /registrations/{regId}/generate-qr:
+    get:
+      tags: [Registration]
+      summary: Generate unique QR token
+      parameters:
+        - name: regId
+          in: path
+          schema: { type: integer }
+      responses:
+        "200":
+          description: QR generated
+
+  /registrations/{confId}/list:
+    get:
+      tags: [Registration]
+      summary: List registrations for a conference
+      parameters:
+        - in: path
+          name: confId
+          schema: { type: integer }
+      responses:
+        "200":
+          description: List returned

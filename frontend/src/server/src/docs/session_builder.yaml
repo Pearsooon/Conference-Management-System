@@ -1,0 +1,50 @@
+tags:
+  - name: AI Session Builder
+    description: AI-generated conference session grouping
+
+paths:
+
+  /sessions/run-ai-propose:
+    post:
+      tags: [AI Session Builder]
+      summary: Automatically generate sessions for a conference
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                confId: { type: integer }
+      responses:
+        "200":
+          description: AI Session Proposal Created
+
+  /sessions/{confId}/list:
+    get:
+      tags: [AI Session Builder]
+      summary: List AI sessions for a conference
+      parameters:
+        - in: path
+          name: confId
+          schema: { type: integer }
+      responses:
+        "200":
+          description: session list
+
+  /sessions/{sessionId}/confirm:
+    put:
+      tags: [AI Session Builder]
+      summary: Confirm or edit an AI-generated session
+      parameters:
+        - in: path
+          name: sessionId
+          schema: { type: integer }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              properties:
+                name: { type: string }
+                description: { type: string }
+      responses:
+        "200":
+          description: Session updated

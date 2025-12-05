@@ -1,0 +1,51 @@
+tags:
+  - name: CMS
+    description: Manage conference website content
+
+paths:
+
+  /cms/content/create:
+    post:
+      tags: [CMS]
+      summary: Create new CMS content
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                conferenceId: { type: integer }
+                title: { type: string }
+                body: { type: string }
+                contentType: { type: string }
+                scheduledPublishTime: { type: string, format: date-time }
+      responses:
+        "201":
+          description: Content created
+
+  /cms/content/{contentId}/publish:
+    put:
+      tags: [CMS]
+      summary: Publish content immediately
+      parameters:
+        - in: path
+          name: contentId
+          schema: { type: integer }
+          required: true
+      responses:
+        "200":
+          description: Content published
+
+  /cms/content/{confId}/list:
+    get:
+      tags: [CMS]
+      summary: Get all CMS content for a conference
+      parameters:
+        - in: path
+          name: confId
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: List returned

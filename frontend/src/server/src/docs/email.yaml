@@ -1,0 +1,57 @@
+tags:
+  - name: Email
+    description: Conference Email Notification System
+
+paths:
+
+  /emails/send-decision:
+    post:
+      tags: [Email]
+      summary: Send decision notification (Accept/Reject/Revision)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                conferenceId: { type: integer }
+                paperId: { type: integer }
+                emailTo: { type: string }
+                authorName: { type: string }
+                paperTitle: { type: string }
+                decision: 
+                  type: string
+                  enum: [ACCEPTED, REJECTED, MINOR_REVISION, MAJOR_REVISION]
+      responses:
+        "200":
+          description: Email sent & logged
+
+  /emails/send-thankyou:
+    post:
+      tags: [Email]
+      summary: Send post-event thank-you email
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                conferenceId: { type: integer }
+                regId: { type: integer }
+                fullName: { type: string }
+                emailTo: { type: string }
+      responses:
+        "200":
+          description: Email sent & logged
+
+  /emails/logs/{confId}:
+    get:
+      tags: [Email]
+      summary: Get email logs of a conference
+      parameters:
+        - in: path
+          name: confId
+          schema: { type: integer }
+      responses:
+        "200":
+          description: Logs returned

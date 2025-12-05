@@ -1,0 +1,31 @@
+tags:
+  - name: AI Proofreading
+    description: AI checks for format and plagiarism
+
+paths:
+
+  /papers/versions/{versionId}/run-ai-check:
+    post:
+      tags: [AI Proofreading]
+      summary: Run AI format & plagiarism check
+      parameters:
+        - name: versionId
+          in: path
+          schema: { type: integer }
+          required: true
+      responses:
+        "200":
+          description: AI check completed
+
+  /papers/versions/{versionId}/ai-logs:
+    get:
+      tags: [AI Proofreading]
+      summary: Get all AI check logs for a version
+      parameters:
+        - name: versionId
+          in: path
+          schema: { type: integer }
+          required: true
+      responses:
+        "200":
+          description: Log list

@@ -1,0 +1,84 @@
+openapi: 3.0.0
+info:
+  title: Submission Module - Review Decisions
+  version: 1.0.0
+  description: API for handling review decision workflows
+
+tags:
+  - name: Submission - Review Decisions
+    description: Operations for managing and finalizing paper acceptance decisions.
+
+paths:
+  /api/v1/papers/decisions/{confId}:
+    get:
+      tags:
+        - Submission - Review Decisions
+      summary: Get decision summary for all papers in a conference
+      parameters:
+        - in: path
+          name: confId
+          required: true
+          schema:
+            type: integer
+          description: Conference ID
+        - in: query
+          name: statusFilter
+          schema:
+            type: string
+            enum: [SUBMITTED, UNDER_REVIEW]
+          description: Filter papers by current status
+      responses:
+        200:
+          description: Summary data fetched successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    paperId:
+                      type: integer
+                    title:
+                      type: string
+                    avgScore:
+                      type: number
+                      format: float
+                    suggestedDecision:
+                      type: string
+        500:
+          description: Internal server error
+
+  /api/v1/papers/decisions/{paperId}:
+    put:
+      tags:
+        - Submission - Review Decisions
+      summary: Update the final decision status for a paper
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: paperId
+          required: true
+          schema:
+            type: integer
+          description: Paper ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                newStatus:
+                  type: string
+                  enum:
+                    - ACCEPTED
+                    - REJECTED
+                    - MINOR_REVISION
+                    - MAJOR_REVISION
+      responses:
+        200:
+          description: Decision updated successfully
+        400:
+          description: Invalid status provided
